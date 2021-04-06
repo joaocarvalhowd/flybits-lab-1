@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flybits-prime-numbers
+spec:
+  selector:
+    matchLabels:
+      app: flybits-prime-numbers
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: flybits-prime-numbers
+    spec:
+      containers:
+        - name: prime-numbers
+          image: joaocarvalhowd/app-test:1.0.0
+          env:
+            - name: PRIME_NUMBER_LOWER
+              value: "1"
+            - name: PRIME_NUMBER_UPPER
+              value: "100000"
