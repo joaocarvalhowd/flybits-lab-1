@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flybits-prime-numbers
+spec:
+  selector:
+    matchLabels:
+      app: flybits-prime-numbers
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: flybits-prime-numbers
+    spec:
+      containers:
+        - name: prime-numbers
+          image: joaocarvalhowd/app-test:1.0.0
+          resources:
+            requests:
+              memory: "100Mi"
+              cpu: "0.1"
+            limits:
+              memory: "200Mi"
+              cpu: "0.2"
+          env:
+            - name: PRIME_NUMBER_LOWER
+              value: "1"
+            - name: PRIME_NUMBER_UPPER
+              value: "100000"
+              
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: flybits-prime-numbers
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: flybits-prime-numbers
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 50
