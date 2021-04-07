@@ -1,0 +1,7 @@
+resources:
+  - ./../../base
+namePrefix: dev-
+images:
+ - name: nginx
+   newName: nginx
+   newTag: 1.19-alpine
